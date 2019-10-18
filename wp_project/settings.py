@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'celery',
     'rest_framework',
     'api'
 ]
@@ -116,8 +117,27 @@ USE_L10N = True
 
 USE_TZ = True
 
+DATETIME_FORMAT = "%Y-%m-%d% H:%M:%S"
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Max payload 1MB = 1048576b
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1048576
+
+# Celery configuration
+CELERY_BROKER_URL = 'redis://localhost:32769'
+CELERY_RESULT_BACKEND = 'redis://localhost:32769'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/London'
+CELERY_BEAT_SCHEDULE = {
+    'task1': {
+        'task': 'wp_project.celery.task1',
+        'schedule': 1.0,  # 1 second
+    }
+}
