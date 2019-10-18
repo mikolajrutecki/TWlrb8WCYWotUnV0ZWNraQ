@@ -1,8 +1,14 @@
 from rest_framework.serializers import ModelSerializer
-from api.models import Request
+from api.models import RequestModel, RequestModelResponse
 
 
-class RequestSerializer(ModelSerializer):
+class RequestModelSerializer(ModelSerializer):
     class Meta:
-        model = Request
+        model = RequestModel
         fields = '__all__'
+
+
+class RequestModelResponseSerializer(ModelSerializer):
+    class Meta:
+        model = RequestModelResponse
+        fields = ['response', 'duration', 'created_at']
