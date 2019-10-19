@@ -31,4 +31,8 @@ The API is available at:
 
     localhost:8080/api/fetcher
 
+After providing new urls with intervals to fetch, its time to run **celery** to handle them.
+
+    To run worker: celery -A wp_project worker -l info
+    To run beat: celery -A wp_project beat -l info
 
