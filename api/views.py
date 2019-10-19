@@ -17,16 +17,16 @@ class RequestModelViewSet(ModelViewSet):
     serializer_class = RequestModelSerializer
     queryset = RequestModel.objects.all()
 
-    def create(self, request, *args, **kwargs):
-        now = timezone.now()
-        serializer = RequestModelSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        req = RequestModel.objects.create(url=request.data['url'],
-                                          interval=int(request.data['interval']),
-                                          last_run_at=now,
-                                          next_run_at=now + timedelta(seconds=int(request.data['interval'])))
-        req.save()
-        return Response(status=status.HTTP_201_CREATED)
+    # def create(self, request, *args, **kwargs):
+    #     now = timezone.now()
+    #     serializer = RequestModelSerializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     req = RequestModel.objects.create(url=request.data['url'],
+    #                                       interval=int(request.data['interval']),
+    #                                       last_run_at=now,
+    #                                       next_run_at=now + timedelta(seconds=int(request.data['interval'])))
+    #     req.save()
+    #     return Response(status=status.HTTP_201_CREATED)
 
     @action(detail=True, methods=['get'], permission_classes=[AllowAny])
     def history(self, request, pk=None):

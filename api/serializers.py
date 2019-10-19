@@ -8,7 +8,6 @@ class RequestModelSerializer(ModelSerializer):
 
     class Meta:
         model = RequestModel
-        read_only_fields = ['id', 'last_run_at', 'next_run_at']
         fields = ['id', 'url', 'interval']
 
 

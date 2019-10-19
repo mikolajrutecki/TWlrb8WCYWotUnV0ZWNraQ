@@ -128,16 +128,14 @@ STATIC_URL = '/static/'
 # Max payload 1MB = 1048576b
 DATA_UPLOAD_MAX_MEMORY_SIZE = 1048576
 
+# Fetch timeout
+FETCH_TIMEOUT = 5  # 5 seconds
+
 # Celery configuration
-CELERY_BROKER_URL = 'redis://localhost:32769'
-CELERY_RESULT_BACKEND = 'redis://localhost:32769'
+CELERY_BROKER_URL = 'redis://localhost:32771'
+CELERY_RESULT_BACKEND = 'redis://localhost:32771'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Europe/London'
-CELERY_BEAT_SCHEDULE = {
-    'task1': {
-        'task': 'wp_project.celery.task1',
-        'schedule': 1.0,  # 1 second
-    }
-}
+
