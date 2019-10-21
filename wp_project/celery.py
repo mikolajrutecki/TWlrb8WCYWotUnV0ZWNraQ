@@ -76,7 +76,7 @@ def fetch_url(request_id, url):
         logging.error('[!] max retries exceeded')
         save_response.s(request_id, time_elapsed).apply_async()
     except:
-        logging.critical('[!] unknown exception')
+        logging.critical('[!] unknown exception - probably wrong url!')
         save_response.s(request_id, time_elapsed).apply_async()
 
 
