@@ -1,9 +1,14 @@
+from django.urls import path, include
 from rest_framework import routers
 
 from api.views import RequestModelViewSet
 
-router = routers.SimpleRouter()
-router.register(r'fetcher', RequestModelViewSet)
+app_name = 'api'
 
-urlpatterns = router.urls
+router = routers.SimpleRouter()
+router.register(r'fetcher', RequestModelViewSet, 'fetcher')
+
+urlpatterns = [
+    path('', include(router.urls))
+]
 
