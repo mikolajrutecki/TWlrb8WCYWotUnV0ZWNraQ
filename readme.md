@@ -45,3 +45,7 @@ You should have now 3 tabs opened.
 
 
 We could simplify running **Celery** with supervisord, but for local purposes this isn't necessary.
+
+## Tests
+
+    python manage.py test
