@@ -6,3 +6,4 @@ router = routers.SimpleRouter()
 router.register(r'fetcher', RequestModelViewSet)
 
 urlpatterns = router.urls
+

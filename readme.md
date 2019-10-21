@@ -30,5 +30,18 @@ Run server and tell him to listen 8080 port:
 The API is available at:
 
     localhost:8080/api/fetcher
+    
+## Celery
+After all steps above, please turn on **Celery**
+
+Open another tab in terminal and type:
+    
+    celery -A wp_project worker -l info
+    
+After setting up the worker, turn on celery beat in another terminal tab.
+You should have now 3 tabs opened.
+
+    celery -A wp_project beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
 
 
+We could simplify running **Celery** with supervisord, but for local purposes this isn't necessary.

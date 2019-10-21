@@ -1,8 +1,4 @@
-from datetime import timedelta
-
-from django.utils import timezone
-
-from django.shortcuts import get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
@@ -17,20 +13,21 @@ class RequestModelViewSet(ModelViewSet):
     serializer_class = RequestModelSerializer
     queryset = RequestModel.objects.all()
 
-    # def create(self, request, *args, **kwargs):
-    #     now = timezone.now()
-    #     serializer = RequestModelSerializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     req = RequestModel.objects.create(url=request.data['url'],
-    #                                       interval=int(request.data['interval']),
-    #                                       last_run_at=now,
-    #                                       next_run_at=now + timedelta(seconds=int(request.data['interval'])))
-    #     req.save()
-    #     return Response(status=status.HTTP_201_CREATED)
-
     @action(detail=True, methods=['get'], permission_classes=[AllowAny])
     def history(self, request, pk=None):
-        request_model = get_object_or_404(RequestModel, id=pk)
+        """
+        Gets response history for given RequestModel instance id
+
+        :param request: request
+        :param pk: id of RequestModel instance
+        :return: serialized data
+        """
+        try:
+            request_model = RequestModel.objects.get(id=pk)
+        except ValueError:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        except ObjectDoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
         request_model_responses = RequestModelResponse.objects.filter(request_model=request_model)
         serialized_responses = RequestModelResponseSerializer(request_model_responses, many=True)
         serializer_data = serialized_responses.data
